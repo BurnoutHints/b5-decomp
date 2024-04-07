@@ -30,7 +30,7 @@ namespace BrnNetwork
 	protected:
 		virtual void PlatformSpecificUpdate(const BrnNetworkModuleIO::PostSimulationInputBuffer* lpInput);
 
-		virtual void GetUserNameAndPassword(char *, char *);
+		virtual void GetUserNameAndPassword(char* lacUserName, char* lacPassword);
 
 	private:
 		EPlatformSpecificSubState mePlatformSpecificSubState;

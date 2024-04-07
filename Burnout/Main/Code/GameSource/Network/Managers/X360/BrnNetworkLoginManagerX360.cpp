@@ -2,9 +2,9 @@
 
 namespace BrnNetwork 
 {
-	void LoginManagerX360::PlatformSpecificUpdate()
+	void LoginManagerX360::PlatformSpecificUpdate(const BrnNetworkModuleIO::PostSimulationInputBuffer* lpInput)
 	{
-		EPlatformSpecificUpdate ePlatformSpecificSubState;
+		EPlatformSpecificSubState ePlatformSpecificSubState;
 
 		ePlatformSpecificSubState = this->mePlatformSpecificSubState;
 		if (ePlatformSpecificSubState)
