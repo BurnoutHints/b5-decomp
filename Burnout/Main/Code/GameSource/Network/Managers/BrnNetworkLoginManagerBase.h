@@ -7,7 +7,7 @@ namespace BrnNetwork
 
 	class LoginManagerBase 
 	{
-
+	public:
 		enum ESignInType : int
 		{
 			E_SIGN_IN_TYPE_NORMAL = 0x0,
@@ -44,7 +44,6 @@ namespace BrnNetwork
 			E_SUBSTATE_COUNT = 0xF,
 		};
 
-	public:
 		LoginManagerBase();
 		
 		void Construct(BrnNetworkModule *lpNetworkModule);

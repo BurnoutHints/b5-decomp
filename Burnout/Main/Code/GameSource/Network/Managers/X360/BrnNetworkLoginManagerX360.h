@@ -1,4 +1,4 @@
-#include "Network/BrnNetworkLoginManagerBase.h"
+#include "Network/Managers/BrnNetworkLoginManagerBase.h"
 
 namespace BrnNetwork 
 {
