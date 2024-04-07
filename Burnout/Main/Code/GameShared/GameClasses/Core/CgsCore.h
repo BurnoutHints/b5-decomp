@@ -8,7 +8,24 @@
 #include "Core/PC/CgsCorePC.h"
 #endif
 
+using renderengine;
+using rw::math;
+using rw::math::vpu;
+using rw::math::fpu;
+using rw::math::vpl;
+using rw::core::stdc;
+
 namespace CgsCore
 {
+	const int32_t KI_PS2EECACHELINESIZE = 64;
 
+	const int32_t KI_X86CACHELINESIZE = 32;
+
+	const int32_t KI_X64CACHELINESIZE = 64;
+
+	const int32_t KI_PPCCACHELINESIZE = 128;
+
+	const int32_t KI_SPUCACHELINESIZE = 128;
+
+	const int32_t KI_DEBUGMAXVARGSSTRINGLENGTH = 8192;
 }

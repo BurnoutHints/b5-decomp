@@ -33,6 +33,7 @@ namespace CgsDev
 		void EndAssert();
 
 		extern char* gpcMessageBuffer;
+		
 		extern int32_t giMessageBufferSize;
 
 		extern void PrintStringed(const char* lpcFile, const int liLine, const char* lacMessage);
