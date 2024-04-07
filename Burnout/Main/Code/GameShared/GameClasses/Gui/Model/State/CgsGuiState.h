@@ -1,14 +1,40 @@
 namespace CgsGui 
 {
-	class State
+	class State : public CgsFsm::ScriptedState
 	{
-		void SetStateInterface(CgsGui::StateInterface *lpStateInterface);
+	protected:
+		InputBuffer::GuiEventQueue* mpInGuiEventQueue;
+		
+		StateInterface* mpStateInterface;
 
-		// Not sure if this is supposed to be virtual, 
-		// and if so, is the one above supposed to be as well?
-		virtual void GetResourcesToLoad(CgsGui::sResourceTuple **lpaResourceTuples, uint32_t *lpuNumberOfResources);
+		bool mbStateChangePending;
+	
+		char macEvent[16];
+	
+		bool mbIsSaveLoadState;
+	
+		bool mbIsVideoState;
+	public:
+		State();
 
-	private:
-		CgsGui::StateInterface *mpStateInterface;
+		virtual void Construct(CgsID lId, CgsFsm::ScriptedFsm* lpFsm);
+
+		virtual void PreWorldUpdate();
+
+		void SetStateInterface(StateInterface *lpStateInterface);
+
+		void SetInEventQueue(InputBuffer::GuiEventQueue *);
+
+		void SendStateEvent(const char* lpacEvent);
+
+		const bool IsVideoState() const;
+
+		const bool IsSaveLoadState() const;
+
+		virtual void GetResourcesToLoad(sResourceTuple **lpaResourceTuples, uint32_t *lpuNumberOfResources);
+
+		virtual void PreUpdate();
+
+		virtual void PostUpdate();
 	};
 }

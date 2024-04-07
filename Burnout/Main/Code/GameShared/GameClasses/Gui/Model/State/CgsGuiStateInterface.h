@@ -2,9 +2,9 @@ namespace CgsGui
 {
 	class StateInterface 
 	{
-		CgsGui::EventObserver *mpObserver;
-		CgsGui::GuiAccessPointers *mpAccessPointers;
+		EventObserver *mpObserver;
+		GuiAccessPointers *mpAccessPointers;
 		rw::IResourceAllocator *mpAllocator;
-		CgsGui::GuiEventQueueLarge mOutEventQueue;
+		GuiEventQueueLarge mOutEventQueue;
 	};
 }
