@@ -4,6 +4,7 @@ namespace BrnNetwork
 {
 	class LoginManagerPS3 : LoginManagerBase 
 	{
+	public:
 		enum EPlatformSpecificSubState : int
 		{
 			E_PLATFORM_SPECIFIC_SUBSTATE_SIGN_IN_TO_NP = 0x0,
@@ -12,14 +13,8 @@ namespace BrnNetwork
 			E_PLATFORM_SPECIFIC_SUBSTATE_COUNT = 0x3,
 		};
 
-	private:
-		EPlatformSpecificSubState mePlatformSpecificSubState;
-
-		bool mbHaveShownChatPopup;
-
-	public:
 		LoginManagerPS3();
-		
+
 		void Construct(BrnNetworkModule* lpNetworkModule);
 
 		bool Prepare();
@@ -38,6 +33,10 @@ namespace BrnNetwork
 		virtual void GetUserNameAndPassword(char *, char *);
 
 	private:
+		EPlatformSpecificSubState mePlatformSpecificSubState;
+
+		bool mbHaveShownChatPopup;
+
 		void StartDirtySockSignIn();
 
 		virtual void ShowChatRestrictionPopup();
