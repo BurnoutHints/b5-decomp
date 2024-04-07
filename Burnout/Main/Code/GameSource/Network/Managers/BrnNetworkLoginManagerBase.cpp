@@ -91,6 +91,14 @@ namespace BrnNetwork
 		}
 	}
 
+	void LoginManagerBase::ShowChatRestrictionPopup()
+	{
+		this->meSignInState = E_SIGN_IN_STATE_COUNT;
+		this->meSubState = E_SUBSTATE_DONE;
+		this->meCompletedSignInType = this->meSignInType;
+		this->meSignInType = E_SIGN_IN_TYPE_COUNT;
+	}
+
 	void LoginManagerBase::Finished(bool lbSuccess)
 	{
 		if (!lbSuccess) 
