@@ -1,3 +1,5 @@
+#include "CgsGuiState.h"
+
 namespace CgsGui 
 {
 	void State::SetStateInterface(CgsGui::StateInterface *lpStateInterface)

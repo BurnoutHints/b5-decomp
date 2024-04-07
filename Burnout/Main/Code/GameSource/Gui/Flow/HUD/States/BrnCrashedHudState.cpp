@@ -1,3 +1,5 @@
+#include "BrnCrashedHudState.h"
+
 namespace BrnGui
 {
 	bool CrashedHudState::UpdateWFInit()

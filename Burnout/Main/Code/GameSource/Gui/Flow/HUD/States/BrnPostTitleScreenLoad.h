@@ -1,3 +1,5 @@
+#include "Gui/Model/State/CgsGuiState.h"
+
 namespace BrnGui 
 {
 	class PostTitleScreenLoad : CgsGui::State

@@ -1,3 +1,4 @@
+#include "BrnPostTitleScreenLoad.h"
 namespace BrnGui
 {
 	void PostTitleScreenLoad::OnLeave()

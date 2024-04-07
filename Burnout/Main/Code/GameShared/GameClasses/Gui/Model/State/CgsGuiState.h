@@ -1,3 +1,5 @@
+#include "CgsGuiStateInterface.h"
+
 namespace CgsGui 
 {
 	class State : public CgsFsm::ScriptedState
