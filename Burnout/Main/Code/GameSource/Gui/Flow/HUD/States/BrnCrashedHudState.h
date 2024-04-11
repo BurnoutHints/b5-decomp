@@ -17,6 +17,19 @@ namespace BrnGui
 		};
 
 	private:
+		// Most of these are most likely from CgsGui::State
+		void Update();
+
+		void UpdateGetCache();
+
+		void UpdateLoading();
+
+		void UpdatePermenant();
+
+		void UpdateRunning();
+
+		void UpdateSetupState();
+
 		bool UpdateWFInit();
 	};
 }

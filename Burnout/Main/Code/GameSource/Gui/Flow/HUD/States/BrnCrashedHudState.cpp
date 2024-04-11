@@ -10,7 +10,7 @@ namespace BrnGui
 				"UPDATE ME", 0, 
 				"mpCache");
 		}
-		// TODO (Decomp): Fix GuiFlow reference
+		// TODO (Decomp): Fix GuiFlow reference (if needed)
 		return GuiCache::AreAllAptComponentsInitialised(this->mpCache, (BrnGui::GuiFlow*)1);
 	}
 }
