@@ -2,7 +2,10 @@
 
 
 bool g_01397E63;
+bool g_0139813C;
+bool g_0139813E;
 bool g_0139813F;
+bool g_01398242;
 
 
 void fn_008FB500()
@@ -27,7 +30,6 @@ void fn_008FB500()
         g_01397E63 = false;
     }
 }
-
 
 HWND fn_008FB590(int p1, int p2, bool p3)
 {
@@ -59,6 +61,27 @@ HWND fn_008FB590(int p1, int p2, bool p3)
     // TODO: finish this function
 }
 
+void fn_008FB8F0()
+{
+    if (g_0139813E)
+    {
+        if (!g_0139813C || g_01398242)
+        {
+            ShowCursor(FALSE);
+            ClipCursor(nullptr);
+
+            while (ShowCursor(TRUE) < 0)
+            {
+            }
+        }
+        else
+        {
+            // TODO
+        }
+
+        g_0139813E = false;
+    }
+}
 
 LRESULT CALLBACK fn_008FB9D0(HWND p1, UINT p2, WPARAM p3, LPARAM p4)
 {
