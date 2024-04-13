@@ -1,6 +1,34 @@
 #include "Window.hpp"
 
 
+bool g_01397E63;
+bool g_0139813F;
+
+
+void fn_008FB500()
+{
+    MSG msg;
+    msg.message = 0;
+    while (PeekMessageA(&msg, nullptr, 0, 0, PM_REMOVE))
+    {
+        if (msg.message == WM_QUIT)
+        {
+            g_0139813F = true;
+        }
+
+        TranslateMessage(&msg);
+        DispatchMessageA(&msg);
+    }
+
+    fn_008FB8F0();
+    if (g_01397E63)
+    {
+        PostQuitMessage(0);
+        g_01397E63 = false;
+    }
+}
+
+
 HWND fn_008FB590(int p1, int p2, bool p3)
 {
     HMODULE moduleHandle = GetModuleHandleA(nullptr);
