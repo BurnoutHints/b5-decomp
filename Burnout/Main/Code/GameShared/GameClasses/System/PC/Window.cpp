@@ -3,10 +3,17 @@
 
 bool g_01397E63;
 bool g_0139813C;
+bool g_0139813D;
 bool g_0139813E;
 bool g_0139813F;
 HWND g_0139815C;
+bool g_01398241;
 bool g_01398242;
+bool g_01398243;
+float g_01398244;
+float g_01398248;
+float g_013FC2A8;
+bool g_013FD395;
 
 
 void fn_008FB500()
@@ -25,11 +32,7 @@ void fn_008FB500()
     }
 
     fn_008FB8F0();
-    if (g_01397E63)
-    {
-        PostQuitMessage(0);
-        g_01397E63 = false;
-    }
+    fn_008FBEE0(); // inlined
 }
 
 HWND fn_008FB590(int p1, int p2, bool p3)
@@ -108,4 +111,61 @@ void fn_008FB8F0()
 LRESULT CALLBACK fn_008FB9D0(HWND p1, UINT p2, WPARAM p3, LPARAM p4)
 {
 
+}
+
+bool fn_008FBEC0()
+{
+    return g_0139813C && !g_013FD395;
+}
+
+void fn_008FBEE0()
+{
+    if (g_01397E63)
+    {
+        PostQuitMessage(0);
+        g_01397E63 = false;
+    }
+}
+
+bool fn_008FBF00()
+{
+    return g_01398241;
+}
+
+float fn_008FBF10()
+{
+    float tmp = g_01398248;
+    g_01398248 = 0.0f;
+    return tmp;
+}
+
+void fn_008FBF30(float p1)
+{
+    g_01398248 += p1;
+}
+
+void fn_008FBF50(float p1, float p2, bool p3)
+{
+    g_013FC2A8 = p1;
+    g_01398244 = p2;
+    g_01398243 = p3;
+}
+
+void fn_008FBFA0(float& p1, float& p2, bool& p3)
+{
+    p1 = g_013FC2A8;
+    p2 = g_01398244;
+    p3 = g_01398243;
+}
+
+void fn_008FBFE0()
+{
+    g_0139813D = true;
+}
+
+bool fn_008FBFF0()
+{
+    bool tmp = g_0139813D;
+    g_0139813D = false;
+    return tmp;
 }
