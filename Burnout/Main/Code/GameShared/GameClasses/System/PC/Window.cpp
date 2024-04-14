@@ -5,6 +5,7 @@ bool g_01397E63;
 bool g_0139813C;
 bool g_0139813E;
 bool g_0139813F;
+HWND g_0139815C;
 bool g_01398242;
 
 
@@ -76,7 +77,28 @@ void fn_008FB8F0()
         }
         else
         {
-            // TODO
+            RECT windowRect;
+            if (GetClientRect(g_0139815C, &windowRect))
+            {
+                POINT pt1, pt2;
+                pt1.x = windowRect.left;
+                pt1.y = windowRect.top;
+                pt2.x = windowRect.right;
+                pt2.y = windowRect.bottom;
+                ClientToScreen(g_0139815C, &pt1);
+                ClientToScreen(g_0139815C, &pt2);
+
+                RECT screenRect;
+                screenRect.left = pt1.x;
+                screenRect.top = pt1.y;
+                screenRect.right = pt2.x;
+                screenRect.bottom = pt2.y;
+                ClipCursor(&screenRect);
+
+                while (ShowCursor(FALSE) >= 0)
+                {
+                }
+            }
         }
 
         g_0139813E = false;
