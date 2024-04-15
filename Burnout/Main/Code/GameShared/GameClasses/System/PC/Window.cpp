@@ -1,5 +1,11 @@
 #include "Window.hpp"
 
+#include <cstdint>
+
+#include <Windowsx.h>
+
+
+int32_t g_00F4F6FC = 1;
 
 bool g_01397E63;
 bool g_0139813C;
@@ -110,7 +116,75 @@ void fn_008FB8F0()
 
 LRESULT CALLBACK fn_008FB9D0(HWND p1, UINT p2, WPARAM p3, LPARAM p4)
 {
+    // TODO: add other cases
+    
+    switch (p2)
+    {
+    case WM_CLOSE:
+        g_0139813F = true;
+        return 0;
 
+    case WM_CREATE:
+        if (!g_01398242)
+        {
+            g_0139813E = true;
+        }
+        break;
+
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        break;
+
+    case WM_MOVE:
+        g_0139813E = true;
+        break;
+
+    case WM_SIZE:
+        if (g_00F4F6FC == 1)
+        {
+            if (!g_01398242)
+            {
+                g_0139813E = true;
+            }
+        }
+        break;
+
+    case WM_COMMAND:
+        // TODO
+        break;
+
+    case WM_MOUSEWHEEL:
+        {
+            float delta = static_cast<float>(GET_WHEEL_DELTA_WPARAM(p3)) / static_cast<float>(WHEEL_DELTA);
+            fn_008FBF30(delta); // inlined
+        }
+        break;
+
+    case WM_MENUCHAR:
+        // TODO
+        break;
+
+    case WM_MOUSEMOVE:
+    case WM_LBUTTONDOWN:
+    case WM_LBUTTONUP:
+        if (g_0139813C)
+        {
+            float x = GET_X_LPARAM(p4);
+            float y = GET_Y_LPARAM(p4);
+
+            RECT rect;
+            if (GetClientRect(p1, &rect))
+            {
+                x /= rect.right - rect.left;
+                y /= rect.bottom - rect.top;
+            }
+
+            fn_008FBF50(x, y, GET_KEYSTATE_WPARAM(p3) == MK_LBUTTON); // inlined
+        }
+        break;
+    }
+
+    return DefWindowProcA(p1, p2, p3, p4);
 }
 
 bool fn_008FBEC0()
