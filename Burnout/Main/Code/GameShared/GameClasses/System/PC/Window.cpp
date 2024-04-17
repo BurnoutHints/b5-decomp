@@ -22,6 +22,9 @@ float g_013FC2A8;
 bool g_013FD395;
 
 
+void fn_004B0580(int32_t p1, WPARAM p2, LPARAM p3);
+
+
 void fn_008FB500()
 {
     MSG msg;
@@ -116,8 +119,6 @@ void fn_008FB8F0()
 
 LRESULT CALLBACK fn_008FB9D0(HWND p1, UINT p2, WPARAM p3, LPARAM p4)
 {
-    // TODO: add other cases
-    
     switch (p2)
     {
     case WM_CLOSE:
@@ -150,7 +151,36 @@ LRESULT CALLBACK fn_008FB9D0(HWND p1, UINT p2, WPARAM p3, LPARAM p4)
         break;
 
     case WM_COMMAND:
+        fn_004B0580(2, p3, p4);
+        break;
+
+    case WM_ACTIVATEAPP:
         // TODO
+        break;
+
+    case WM_DISPLAYCHANGE:
+        // TODO
+        break;
+
+    case WM_KEYDOWN:
+        fn_004B0580(1, p3, p4);
+        break;
+
+    case WM_CHAR:
+        fn_004B0580(0, p3, p4);
+        break;
+
+    case WM_SYSKEYDOWN:
+        switch (p3)
+        {
+        case VK_RETURN:
+            // TODO
+            break;
+
+        case VK_MENU:
+        case VK_F10:
+            return 0;
+        }
         break;
 
     case WM_MOUSEWHEEL:
@@ -161,8 +191,7 @@ LRESULT CALLBACK fn_008FB9D0(HWND p1, UINT p2, WPARAM p3, LPARAM p4)
         break;
 
     case WM_MENUCHAR:
-        // TODO
-        break;
+        return MNC_CLOSE << 16;
 
     case WM_MOUSEMOVE:
     case WM_LBUTTONDOWN:
@@ -182,7 +211,20 @@ LRESULT CALLBACK fn_008FB9D0(HWND p1, UINT p2, WPARAM p3, LPARAM p4)
             fn_008FBF50(x, y, GET_KEYSTATE_WPARAM(p3) == MK_LBUTTON); // inlined
         }
         break;
+
+    case WM_DEVICECHANGE:
+        // TODO
+        break;
+
+    case WM_EXITSIZEMOVE:
+        if (!g_01398242)
+        {
+            g_0139813E = true;
+        }
+        break;
     }
+
+    // TODO: add the loop
 
     return DefWindowProcA(p1, p2, p3, p4);
 }
