@@ -3,6 +3,7 @@
 #include <cstdint>
 
 #include <Windowsx.h>
+#include <Dbt.h>
 
 
 int32_t g_00F4F6FC = 1;
@@ -72,6 +73,23 @@ HWND fn_008FB590(int p1, int p2, bool p3)
     AdjustWindowRect(&rect, p3 ? (WS_POPUP | WS_CLIPCHILDREN) : (WS_CLIPCHILDREN | WS_BORDER | WS_DLGFRAME | WS_SYSMENU | WS_MINIMIZEBOX), FALSE);
 
     // TODO: finish this function
+
+    HDEVNOTIFY deviceNotificationHandle;
+    if (!fn_008FB8B0(/* TODO */ nullptr, &deviceNotificationHandle)) // inlined
+    {
+        return nullptr;
+    }
+}
+
+BOOL fn_008FB8B0(HANDLE p1, HDEVNOTIFY* p2)
+{
+    DEV_BROADCAST_DEVICEINTERFACE_A notificationFilter = {};
+    notificationFilter.dbcc_size = sizeof(DEV_BROADCAST_DEVICEINTERFACE_A);
+    notificationFilter.dbcc_devicetype = DBT_DEVTYP_DEVICEINTERFACE;
+    
+    HDEVNOTIFY handle = RegisterDeviceNotificationA(p1, &notificationFilter, DEVICE_NOTIFY_ALL_INTERFACE_CLASSES);
+    *p2 = handle;
+    return handle != nullptr;
 }
 
 void fn_008FB8F0()
