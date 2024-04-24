@@ -20,10 +20,16 @@ bool g_01398243;
 float g_01398244;
 float g_01398248;
 float g_013FC2A8;
+struct
+{
+    void(*f1)(void*, HWND, UINT, WPARAM, LPARAM);
+    void* f2;
+} g_013FC2C0[10];
 bool g_013FD395;
 
 
-void fn_004B0580(int32_t p1, WPARAM p2, LPARAM p3);
+void fn_00901B40(void*, HWND, UINT, WPARAM, LPARAM);
+void fn_004B0580(int32_t, WPARAM, LPARAM);
 
 
 void fn_008FB500()
@@ -177,7 +183,7 @@ LRESULT CALLBACK fn_008FB9D0(HWND p1, UINT p2, WPARAM p3, LPARAM p4)
         break;
 
     case WM_DISPLAYCHANGE:
-        // TODO
+        fn_004B0580(3, p3, p4);
         break;
 
     case WM_KEYDOWN:
@@ -192,7 +198,22 @@ LRESULT CALLBACK fn_008FB9D0(HWND p1, UINT p2, WPARAM p3, LPARAM p4)
         switch (p3)
         {
         case VK_RETURN:
-            // TODO
+            if (HIWORD(p4) & KF_ALTDOWN)
+            {
+                switch (g_00F4F6FC)
+                {
+                case 0:
+                    g_00F4F6FC = 1;
+                    // TODO: set other variables
+                    break;
+                
+                case 1:
+                case 2:
+                    g_00F4F6FC = 0;
+                    // TODO: set other variables
+                    break;
+                }
+            }
             break;
 
         case VK_MENU:
@@ -242,7 +263,14 @@ LRESULT CALLBACK fn_008FB9D0(HWND p1, UINT p2, WPARAM p3, LPARAM p4)
         break;
     }
 
-    // TODO: add the loop
+    for (int i = 0; i < 10; ++i)
+    {
+        auto fn = g_013FC2C0[i].f1;
+        if (fn != nullptr)
+        {
+            fn(g_013FC2C0[i].f2, p1, p2, p3, p4);
+        }
+    }
 
     return DefWindowProcA(p1, p2, p3, p4);
 }
@@ -285,11 +313,29 @@ void fn_008FBF50(float p1, float p2, bool p3)
     g_01398243 = p3;
 }
 
+void fn_008FBF70(void* p1)
+{
+    for (int i = 0; i < 10; ++i)
+    {
+        if (g_013FC2C0[i].f1 == nullptr)
+        {
+            g_013FC2C0[i].f1 = fn_00901B40;
+            g_013FC2C0[i].f2 = p1;
+            break;
+        }
+    }
+}
+
 void fn_008FBFA0(float& p1, float& p2, bool& p3)
 {
     p1 = g_013FC2A8;
     p2 = g_01398244;
     p3 = g_01398243;
+}
+
+void fn_008FBFD0()
+{
+    return;
 }
 
 void fn_008FBFE0()

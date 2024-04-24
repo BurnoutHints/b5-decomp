@@ -16,8 +16,8 @@ bool fn_008FBF00();
 float fn_008FBF10();
 void fn_008FBF30(float p1);
 void fn_008FBF50(float p1, float p2, bool p3);
-void fn_008FBF70(); // TODO
+void fn_008FBF70(void* p1);
 void fn_008FBFA0(float& p1, float& p2, bool& p3);
-void fn_008FBFD0(); // TODO
+void fn_008FBFD0();
 void fn_008FBFE0();
 bool fn_008FBFF0();
