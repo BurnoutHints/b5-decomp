@@ -3,11 +3,48 @@
 #include <cstdint>
 
 #include <Windowsx.h>
+#include <d3d11.h>
 #include <Dbt.h>
+
+
+struct Window
+{
+public:
+    Window(int p1, int p2, HINSTANCE p3, DWORD p4, void(*p5)())
+        :
+        f2(p3),
+        f5(p1),
+        f6(p2),
+        f9(p4),
+        f14(0),
+        f15(p5)
+    {
+    }
+
+    HANDLE fn_00C8BD80();
+
+public:
+    void* f1 = nullptr;
+    HINSTANCE f2 = nullptr;
+    HMENU f3 = nullptr;
+    HWND f4 = nullptr;
+    int f5 = 0;
+    int f6 = 0;
+    int f7 = 0;
+    int f8 = 0;
+    DWORD f9  = 0;
+    const char* f10 = "Burnout(TM) Paradise Remastered";
+    const char* f11 = "BurnoutParadiseWindowClass";
+    uint32_t f12 = 0; // unknown
+    HWND f13 = nullptr;
+    EA::Thread::Semaphore f14;
+    void(*f15)();
+};
 
 
 int32_t g_00F4F6FC = 1;
 
+bool g_013600D0;
 bool g_01397E63;
 bool g_0139813C;
 bool g_0139813D;
@@ -26,6 +63,7 @@ struct
     void* f2;
 } g_013FC2C0[10];
 bool g_013FD395;
+IDXGISwapChain* g_0148600C;
 
 
 void fn_00901B40(void*, HWND, UINT, WPARAM, LPARAM);
@@ -76,18 +114,46 @@ HWND fn_008FB590(int p1, int p2, bool p3)
 
     RECT rect;
     SetRect(&rect, 0, 0, p1, p2);
-    AdjustWindowRect(&rect, p3 ? (WS_POPUP | WS_CLIPCHILDREN) : (WS_CLIPCHILDREN | WS_BORDER | WS_DLGFRAME | WS_SYSMENU | WS_MINIMIZEBOX), FALSE);
+    DWORD windowStyle = p3 ? (WS_POPUP | WS_CLIPCHILDREN) : (WS_CLIPCHILDREN | WS_BORDER | WS_DLGFRAME | WS_SYSMENU | WS_MINIMIZEBOX);
+    AdjustWindowRect(&rect, windowStyle, FALSE);
 
-    // TODO: finish this function
+    static Window s_012FE858(
+        rect.bottom - rect.top,
+        rect.right - rect.left,
+        moduleHandle,
+        windowStyle,
+        fn_008FB500
+    );
+
+    HANDLE threadHandle = s_012FE858.fn_00C8BD80();
+    s_012FE858.f14.Wait();
+
+    AttachThreadInput(
+        GetThreadId(threadHandle),
+        GetCurrentThreadId(),
+        TRUE
+    );
+    GetLastError(); // useless, maybe a part of an assert
+    
+    HWND hwnd = s_012FE858.f13;
+    g_0139813E = true;
+    
+    if (hwnd == nullptr)
+    {
+        GetLastError(); // useless, maybe a part of an assert
+        return nullptr;
+    }
 
     HDEVNOTIFY deviceNotificationHandle;
-    if (!fn_008FB8B0(/* TODO */ nullptr, &deviceNotificationHandle)) // inlined
+    if (!fn_008FB8B0(hwnd, &deviceNotificationHandle)) // inlined
     {
         return nullptr;
     }
+
+    return hwnd;
 }
 
-BOOL fn_008FB8B0(HANDLE p1, HDEVNOTIFY* p2)
+BOOL fn_008FB8B0(HWND p1, HDEVNOTIFY* p2)
 {
     DEV_BROADCAST_DEVICEINTERFACE_A notificationFilter = {};
     notificationFilter.dbcc_size = sizeof(DEV_BROADCAST_DEVICEINTERFACE_A);
@@ -179,7 +245,34 @@ LRESULT CALLBACK fn_008FB9D0(HWND p1, UINT p2, WPARAM p3, LPARAM p4)
         break;
 
     case WM_ACTIVATEAPP:
-        // TODO
+        if (g_01398242)
+        {
+            g_0139813C = true;
+        }
+        else
+        {
+            g_0139813E = true;
+            g_0139813C = p3 == TRUE;
+        }
+        if (g_00F4F6FC == 0 && g_013600D0)
+        {
+            if (p3 == TRUE)
+            {
+                if (g_0148600C != nullptr)
+                {
+                    ShowWindow(p1, SW_SHOWNA);
+                    g_00F4F6FC = 0;
+                    // TODO: set other variables
+                }
+            }
+            else
+            {
+                if (g_0148600C != nullptr)
+                {
+                    ShowWindow(p1, SW_SHOWMINNOACTIVE);
+                }
+            }
+        }
         break;
 
     case WM_DISPLAYCHANGE:
@@ -252,7 +345,13 @@ LRESULT CALLBACK fn_008FB9D0(HWND p1, UINT p2, WPARAM p3, LPARAM p4)
         break;
 
     case WM_DEVICECHANGE:
-        // TODO
+        if (p3 == DBT_DEVICEARRIVAL || p3 == DBT_DEVICEREMOVECOMPLETE)
+        {
+            if (reinterpret_cast<DEV_BROADCAST_HDR*>(p4)->dbch_devicetype == DBT_DEVTYP_DEVICEINTERFACE)
+            {
+                g_0139813D = p3 == DBT_DEVICEARRIVAL ? true : g_0139813D;
+            }
+        }
         break;
 
     case WM_EXITSIZEMOVE:
