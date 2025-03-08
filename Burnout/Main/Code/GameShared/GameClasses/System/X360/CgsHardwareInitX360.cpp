@@ -4,7 +4,7 @@
 
 namespace CgsSystem
 {
-	void CgsSystem::InitializeHardware(int liArgCount_, char **lpacArgs_, const char *lacWorkingDir_, const char *lacFOPENDir_)
+	void HardwareInit::InitializeHardware(int liArgCount_, char **lpacArgs_, const char *lacWorkingDir_, const char *lacFOPENDir_)
 	{
 		if (lacWorkingDir_) 
 		{
